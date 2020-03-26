@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">D8765</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Описание</string>
+    <string name="title_dashboard">Тест</string>
+    <string name="title_notifications">Настройки</string>
+
+    <string name="url_base">http://192.168.0.12:8080/dist/webid/data/User/Ivan.Malinin/home/disk%20D/andr-php-mysql/app/</string>
+    <string name="url_query">apk_query.php</string>
+
 </resources>
