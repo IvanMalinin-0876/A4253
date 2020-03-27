@@ -1,9 +1,5 @@
-
-
-
     <?php
-  
-$query = $_GET["q"];
+
 include("../php/DB_connect.php");
 
 
@@ -35,17 +31,7 @@ $titletext = $titletext.' {
 			
 			}
 			
-$titletext = $titletext.'
-{
-
-  "id" : "0",
-  "name" : "Тестовая книга № 6734",
-  "pages": "153",
-  "author" : "Велько Петр Иванович"
-}
-
-
-]}';	
+$titletext = $titletext.'{}]}';	
 
 $myArray = json_decode($titletext);
 header('Content-Type: application/json');

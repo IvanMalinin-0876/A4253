@@ -17,7 +17,7 @@ session_start();
 <body>
 
 <header class="w3-container w3-teal" style ="background-color: #d0150c!important;" >
-    <h1>Стек: HTML-CSS-PHP-MySQL</h1>
+    <h1>Стек: Android-KOTLIN-PHP-MYSQL-HTML</h1>
 </header>
 
 <div class="w3-bar w3-border">

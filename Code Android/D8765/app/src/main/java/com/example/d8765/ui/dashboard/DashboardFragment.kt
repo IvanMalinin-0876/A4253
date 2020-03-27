@@ -3,6 +3,7 @@ package com.example.d8765.ui.dashboard
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -121,6 +122,7 @@ class DashboardFragment : Fragment() {
  }
 
 
+    
     fun msgscreen(){
 
 
@@ -144,9 +146,7 @@ class DashboardFragment : Fragment() {
                 resp = response.toString();
                 var strResp = response.toString()
                 val jsonObj: JSONObject = JSONObject(strResp)
-
                 liveData.postValue(jsonObj)
-//                text_dashboard.text= response.toString()
             },
             Response.ErrorListener {
                 resp = ""
