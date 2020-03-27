@@ -1,10 +1,15 @@
 package com.example.d8765.ui.dashboard
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.*
+import androidx.cardview.widget.CardView
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +20,11 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.d8765.R
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_book_card.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 class DashboardFragment : Fragment() {
@@ -27,6 +35,8 @@ class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 
+
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -35,18 +45,76 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = dashtetx;
-        })
+
         return root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         getQuery();
+
+       liveData.observe(this, object: Observer<JSONObject> {
+            override fun onChanged(json: JSONObject?) {
+                var t= json
+                update_card(json)
+//                liveData.removeObserver(this)
+            }
+        })
     }
+
+
+ @SuppressLint("ResourceAsColor")
+ fun update_card(json:JSONObject?){
+     allert5436.visibility = View.INVISIBLE
+
+    var t=json
+     val jsonArray: JSONArray = json!!.getJSONArray("item")
+     for (i in 0 until jsonArray.length()) {
+         var jsonInner: JSONObject = jsonArray.getJSONObject(i)
+         var id = jsonInner.get("id")
+         var name = jsonInner.get("name")
+         var pages = jsonInner.get("pages")
+         var author = jsonInner.get("author")
+
+         val t_id: TextView = TextView(this.context)
+         val t_name: TextView = TextView(this.context)
+         val t_pages: TextView = TextView(this.context)
+         val t_author: TextView = TextView(this.context)
+         t_id.text = "Номер книги: "+ id.toString()
+         t_name.text ="Название книги: "+ name.toString()
+         t_pages.text = "Страниц: "+pages.toString()
+         t_author.text ="Автор: "+ author.toString()
+
+         var colortext =  "#FF0A0A0B"
+
+        t_id.setTextColor(Color.parseColor(colortext))
+        t_name.setTextColor(Color.parseColor(colortext))
+        t_pages.setTextColor(Color.parseColor(colortext))
+        t_author.setTextColor(Color.parseColor(colortext))
+
+         t_id.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20F);
+         t_name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
+         t_pages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
+         t_author.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
+//         t_id.setTextSize(14, 18F)
+
+         val Lin  : LinearLayout= LinearLayout(this.context)
+         Lin.setOrientation(LinearLayout.VERTICAL);
+         Lin.setBackgroundResource(R.drawable.shape8746)
+
+         var  param: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,260);
+         param.setMargins(0,40,0,0)
+         Lin.addView(t_id)
+         Lin.addView(t_name)
+         Lin.addView(t_pages)
+         Lin.addView(t_author)
+         Lin.layoutParams =  param
+         sc_card.addView(Lin)
+     }
+
+ }
 
     fun getQuery() {
 
@@ -59,10 +127,9 @@ class DashboardFragment : Fragment() {
                 resp = response.toString();
                 var strResp = response.toString()
                 val jsonObj: JSONObject = JSONObject(strResp)
-//                var title:String =  jsonObj.get("title").toString()
-//                text_home.setText(title)
+
                 liveData.postValue(jsonObj)
-                text_dashboard.text= response.toString()
+//                text_dashboard.text= response.toString()
             },
             Response.ErrorListener {
                 resp = ""

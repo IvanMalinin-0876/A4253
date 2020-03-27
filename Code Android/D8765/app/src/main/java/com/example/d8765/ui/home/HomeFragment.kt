@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.android.volley.Request
@@ -13,11 +15,14 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.d8765.R
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 class HomeFragment : Fragment() {
 
+    var liveData : MutableLiveData<JSONObject> = MutableLiveData<JSONObject>()
     private lateinit var homeViewModel: HomeViewModel
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -36,8 +41,22 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         getQuery();
+        liveData.observe(this, object: Observer<JSONObject> {
+            override fun onChanged(json: JSONObject?) {
+                var t= json
+                update_card(json)
+//                liveData.removeObserver(this)
+            }
+        })
+
+    }
+
+    fun update_card(json:JSONObject?) {
+        allert8754.visibility = View.INVISIBLE
+        scr8543.visibility = View.VISIBLE
+        var title:String =  json!!.get("title").toString()
+               text_home.setText(title)
 
     }
 
@@ -52,8 +71,8 @@ class HomeFragment : Fragment() {
                 resp = response.toString();
                 var strResp = response.toString()
                 val jsonObj: JSONObject = JSONObject(strResp)
-                var title:String =  jsonObj.get("title").toString()
-                text_home.setText(title)
+
+                liveData.postValue(jsonObj)
 
             },
             Response.ErrorListener {
