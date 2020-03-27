@@ -58,6 +58,7 @@ class DashboardFragment : Fragment() {
        liveData.observe(this, object: Observer<JSONObject> {
             override fun onChanged(json: JSONObject?) {
                 var t= json
+                msgscreen()
                 update_card(json)
 //                liveData.removeObserver(this)
             }
@@ -78,43 +79,59 @@ class DashboardFragment : Fragment() {
          var pages = jsonInner.get("pages")
          var author = jsonInner.get("author")
 
-         val t_id: TextView = TextView(this.context)
-         val t_name: TextView = TextView(this.context)
-         val t_pages: TextView = TextView(this.context)
-         val t_author: TextView = TextView(this.context)
-         t_id.text = "Номер книги: "+ id.toString()
-         t_name.text ="Название книги: "+ name.toString()
-         t_pages.text = "Страниц: "+pages.toString()
-         t_author.text ="Автор: "+ author.toString()
+         if (id.toString().compareTo("0")!= 0) {
 
-         var colortext =  "#FF0A0A0B"
+             val t_id: TextView = TextView(this.context)
+             val t_name: TextView = TextView(this.context)
+             val t_pages: TextView = TextView(this.context)
+             val t_author: TextView = TextView(this.context)
+             t_id.text = "Номер книги: " + id.toString()
+             t_name.text = "Название книги: " + name.toString()
+             t_pages.text = "Страниц: " + pages.toString()
+             t_author.text = "Автор: " + author.toString()
 
-        t_id.setTextColor(Color.parseColor(colortext))
-        t_name.setTextColor(Color.parseColor(colortext))
-        t_pages.setTextColor(Color.parseColor(colortext))
-        t_author.setTextColor(Color.parseColor(colortext))
+             var colortext = "#FF0A0A0B"
 
-         t_id.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20F);
-         t_name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
-         t_pages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
-         t_author.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
-//         t_id.setTextSize(14, 18F)
+             t_id.setTextColor(Color.parseColor(colortext))
+             t_name.setTextColor(Color.parseColor(colortext))
+             t_pages.setTextColor(Color.parseColor(colortext))
+             t_author.setTextColor(Color.parseColor(colortext))
 
-         val Lin  : LinearLayout= LinearLayout(this.context)
-         Lin.setOrientation(LinearLayout.VERTICAL);
-         Lin.setBackgroundResource(R.drawable.shape8746)
+             t_id.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20F);
+             t_name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
+             t_pages.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
+             t_author.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16F);
 
-         var  param: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,260);
-         param.setMargins(0,40,0,0)
-         Lin.addView(t_id)
-         Lin.addView(t_name)
-         Lin.addView(t_pages)
-         Lin.addView(t_author)
-         Lin.layoutParams =  param
-         sc_card.addView(Lin)
+             val Lin: LinearLayout = LinearLayout(this.context)
+             Lin.setOrientation(LinearLayout.VERTICAL);
+             Lin.setBackgroundResource(R.drawable.shape8746)
+
+             var param: RelativeLayout.LayoutParams =
+                 RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 260);
+             param.setMargins(0, 40, 0, 0)
+             Lin.addView(t_id)
+             Lin.addView(t_name)
+             Lin.addView(t_pages)
+             Lin.addView(t_author)
+             Lin.layoutParams = param
+             sc_card.addView(Lin)
+         }
      }
 
  }
+
+
+    fun msgscreen(){
+
+
+        val toast = Toast.makeText(
+            this.context,
+            R.string.msg_update,
+            Toast.LENGTH_SHORT
+        )
+        toast.show()
+    }
+
 
     fun getQuery() {
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -55,12 +56,22 @@ class HomeFragment : Fragment() {
     fun update_card(json:JSONObject?) {
         allert8754.visibility = View.INVISIBLE
         scr8543.visibility = View.VISIBLE
+        msgscreen()
         var title:String =  json!!.get("title").toString()
                text_home.setText(title)
 
     }
 
+    fun msgscreen(){
 
+
+        val toast = Toast.makeText(
+            this.context,
+            R.string.msg_update,
+            Toast.LENGTH_SHORT
+        )
+        toast.show()
+    }
     fun getQuery() {
 
         val queue = Volley.newRequestQueue(this.context)

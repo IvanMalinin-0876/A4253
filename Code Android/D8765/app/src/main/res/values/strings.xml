@@ -20,4 +20,7 @@
     <string name="w_savef">Настройки</string>
     <string name="w_error_404">Нет соединения с сервером!!</string>
 
+<!--    сообщения-->
+    <string name="msg_update">Данные обновлены</string>
+
 </resources>
